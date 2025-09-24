@@ -10,17 +10,26 @@ import java.util.List;
 public class LionTest {
 
     @Test
-    public void getKittensDelegatesToFeline() throws Exception {
+    public void getKittensReturnsValueFromFeline() throws Exception {
         Feline feline = Mockito.mock(Feline.class);
         Mockito.when(feline.getKittens()).thenReturn(3);
 
         Lion lion = new Lion(feline, "Самец");
         int actual = lion.getKittens();
 
-        Assert.assertEquals(3, actual);
-        Mockito.verify(feline).getKittens();
+        Assert.assertEquals(3, actual); // одна проверка
     }
 
+    @Test
+    public void getKittensCallsFeline() throws Exception {
+        Feline feline = Mockito.mock(Feline.class);
+        Mockito.when(feline.getKittens()).thenReturn(1);
+
+        Lion lion = new Lion(feline, "Самец");
+        lion.getKittens();
+
+        Mockito.verify(feline).getKittens(); // одна проверка
+    }
     @Test
     public void getFoodReturnsPredatorFood() throws Exception {
         Feline feline = Mockito.mock(Feline.class);
